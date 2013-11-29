@@ -55,12 +55,25 @@ class TransactionListing(object):
         account = self.get_account(account)
         transactions = []
         split_list = account.GetSplitList()
+
+        def get_transaction_str_amount(transaction):
+            return numeric_to_doublestr(
+                    transaction.GetAccountAmount(account))
+
+        # this temporary list is used so that duplicate transactions
+        # can be detected (these appear when multiple splits of the
+        # same transaction belong to the current account)
+        gnc_transactions = []
         for split in split_list:
             transaction = split.GetParent()
-            amount = numeric_to_doublestr(
-                    transaction.GetAccountAmount(account))
+            amount = get_transaction_str_amount(transaction)
             if positive_only and amount[0] == '-':
                 continue
+            if transaction not in gnc_transactions:
+                gnc_transactions.append(transaction)
+
+        for transaction in gnc_transactions:
+            amount = get_transaction_str_amount(transaction)
             yield (
                 self.format_guid(transaction.GetGUID()),
                 transaction.GetDate(),

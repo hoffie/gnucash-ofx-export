@@ -78,11 +78,16 @@ class TransactionListing(object):
                 gnc_transactions.append(transaction)
 
         for transaction in gnc_transactions:
+            guid = self.format_guid(transaction.GetGUID())
+            date = transaction.GetDate()
+            desc = transaction.GetDescription().decode(CHARSET)
             amount = get_transaction_str_amount(transaction)
+            if not desc.strip() and not float(amount):
+                continue
             yield (
-                self.format_guid(transaction.GetGUID()),
-                transaction.GetDate(),
-                transaction.GetDescription().decode(CHARSET),
+                guid,
+                date,
+                desc,
                 amount)
 
     def get_account(self, account):

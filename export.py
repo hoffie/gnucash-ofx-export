@@ -183,7 +183,7 @@ NEWFILEUID:NONE
         footer = self.FOOTER % {
         }
 
-        return (header + transactions + footer).encode("utf-8")
+        return (header + transactions + footer).encode(CHARSET)
 
 def main():
     parser = argparse.ArgumentParser(description="Export GnuCash transactions to QIF")

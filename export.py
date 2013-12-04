@@ -147,6 +147,7 @@ NEWFILEUID:NONE
             <TRNAMT>%(trnamt)s</TRNAMT>
             <FITID>%(fitid)s</FITID>
             <NAME>%(name)s</NAME>
+            <MEMO>%(name)s</MEMO>
           </STMTTRN>"""
 
     FOOTER = """

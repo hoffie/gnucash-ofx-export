@@ -2,6 +2,7 @@ import argparse
 from datetime import datetime
 from uuid import UUID
 from hashlib import sha1
+from xml.sax.saxutils import escape as xml_escape
 from gnucash import Session, Account
 
 CHARSET = 'utf-8'
@@ -32,6 +33,15 @@ def gnucashify(some_object, type):
     if isinstance(object, type):
         return some_object
     return type(instance=some_object)
+
+def xml_template(template, data):
+    """
+    return template % data but with proper escaping
+    """
+    escaped_data = {}
+    for key, value in data.items():
+        escaped_data[key] = xml_escape(value)
+    return template % escaped_data
 
 class TransactionListing(object):
     """
@@ -185,24 +195,24 @@ NEWFILEUID:NONE
             transaction_type = "CREDIT"
             if amount[0] == '-':
                 transaction_type = "DEBIT"
-            transactions += self.TRANSACTION % {
+            transactions += xml_template(self.TRANSACTION, {
                 'trntype': transaction_type,
                 'fitid': guid,
                 'dtposted': ofxdate,
                 'dtuser': ofxdate,
                 'trnamt': amount,
                 'name': memo
-            }
+            })
             if not earliest_tx or earliest_tx > unixtime:
                 earliest_tx = unixtime
             if not latest_tx or latest_tx < unixtime:
                 latest_tx = unixtime
 
-        header = self.HEADER % {
+        header = xml_template(self.HEADER, {
             'acctid': self.account_id,
             'dtstart': self.unixtime2ofx(earliest_tx),
             'dtend': self.unixtime2ofx(latest_tx)
-        }
+        })
 
         footer = self.FOOTER % {
         }

@@ -8,7 +8,7 @@ from gnucash import Session, Account
 CHARSET = 'utf-8'
 
 def numeric_to_doublestr(numeric, delimiter="."):
-    """precision-save conversion of 214/100 to 2,14"""
+    """precision-safe conversion of 214/100 to 2,14"""
     if numeric.denom() != 100:
         raise NotImplementedError("Unsupported GNCNumeric %r" % numeric.denom)
     ret = list(str(numeric.num()))

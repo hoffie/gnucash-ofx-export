@@ -115,7 +115,6 @@ class TransactionListing(object):
             account_name = account_path.pop(0).lower()
             found = False
             for account in search.get_children():
-                account = gnucashify(account, Account)
                 if account.name.lower() == account_name:
                     search = account
                     found = True

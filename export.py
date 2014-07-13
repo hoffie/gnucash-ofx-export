@@ -30,7 +30,7 @@ def main():
         output_fh.write(result)
         output_fh.close()
     else:
-        print result
+        print(result)
 
 
 if __name__ == '__main__':

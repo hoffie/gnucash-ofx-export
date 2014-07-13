@@ -3,7 +3,7 @@ from datetime import datetime
 from uuid import UUID
 from hashlib import sha1
 from xml.sax.saxutils import escape as xml_escape
-from gnucash import Session, Account
+from gnucash import Session
 
 CHARSET = 'utf-8'
 
@@ -19,20 +19,6 @@ def numeric_to_doublestr(numeric, delimiter="."):
         ret = ['0'] * num_fill_digits + ret
     ret.insert(-2, delimiter)
     return ''.join(ret)
-
-def gnucashify(some_object, type):
-    """
-    GnuCash API helper -- GnuCash sometimes returns Python objects
-    and sometimes raw Swig objects, which have to be wrapped in their
-    Python-specific classes.
-    This helper function contains the necessary logic to exactly that.
-
-    @param object
-    @param cls (e.g. Account)
-    """
-    if isinstance(object, type):
-        return some_object
-    return type(instance=some_object)
 
 def xml_template(template, data):
     """

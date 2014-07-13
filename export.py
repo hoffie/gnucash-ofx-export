@@ -19,7 +19,7 @@ def main():
     for transaction in tl.get_all_transactions(args.account,
             positive_only=args.positive_only):
         exporter.add_transaction(*transaction)
-    ofx = exporter.generate_ofx(reverse=args.reverse)
+    ofx = exporter.generate(reverse=args.reverse)
     if args.output:
         output_fh = open(args.output, 'wb')
         output_fh.write(ofx)

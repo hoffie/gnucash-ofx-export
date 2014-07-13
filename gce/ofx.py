@@ -69,7 +69,7 @@ NEWFILEUID:NONE
         dt = datetime.fromtimestamp(unixtime)
         return dt.strftime("%Y%m%d%H%M%S")
 
-    def generate_ofx(self, reverse=False):
+    def generate(self, reverse=False):
         earliest_tx = None
         latest_tx = None
         transactions = ""

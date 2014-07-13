@@ -1,1 +1,3 @@
 all-in-one.sh.conf
+*.pyc
+*.pyo

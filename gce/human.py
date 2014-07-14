@@ -15,5 +15,5 @@ class HumanReadableExporter(object):
         result = ""
         for guid, unixtime, memo, value in self.transactions:
             date = datetime.fromtimestamp(unixtime)
-            result += "%s %s %s %s\n" % (guid, date, memo, value)
+            result += "%s %s %s %s\n" % (guid, date, value, memo)
         return result.encode(CHARSET)

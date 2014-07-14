@@ -13,7 +13,12 @@ class HumanReadableExporter(object):
 
     def generate(self, reverse=False):
         result = ""
-        for guid, unixtime, memo, value in self.transactions:
+        for guid, unixtime, memo, amount in self.transactions:
             date = datetime.fromtimestamp(unixtime)
-            result += "%s %s %s %s\n" % (guid, date, value, memo)
+            if reverse:
+                if amount[0] == '-':
+                    amount = amount[1:]
+                else:
+                    amount = '-' + amount
+            result += "%s %s %s %s\n" % (guid, date, amount, memo)
         return result.encode(CHARSET)

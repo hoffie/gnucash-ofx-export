@@ -11,7 +11,8 @@ class HumanReadableExporter(object):
         pass
 
     def generate(self, reverse=False):
+        result = ""
         for guid, unixtime, memo, value in self.transactions:
             date = datetime.fromtimestamp(unixtime)
-            print("%s %s %s %s" % (guid, date, memo, value))
-        return ""
+            result += "%s %s %s %s\n" % (guid, date, memo, value)
+        return result

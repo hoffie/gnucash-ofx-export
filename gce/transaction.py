@@ -7,13 +7,11 @@ def numeric_to_doublestr(numeric, delimiter="."):
     if numeric.denom() != 100:
         raise NotImplementedError("Unsupported GNCNumeric %r" % numeric.denom)
     ret = list(str(numeric.num()))
-    # ensure that we have A.BC, so we need at least 3 parts; missing
-    # digits are filled up with 0 from the left
-    if len(ret) <= 3:
-        num_fill_digits = 3 - len(ret)
-        ret = ['0'] * num_fill_digits + ret
     ret.insert(-2, delimiter)
-    return ''.join(ret)
+    sign = ""
+    if ret[0] == '-':
+        sign = ret.pop(0)
+    return sign + ''.join(ret).zfill(4)
 
 class TransactionListing(object):
     """
